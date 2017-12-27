@@ -17,7 +17,7 @@
 
   <error-page>
     <error-code>404</error-code>
-    <location>/WEB-INF/views/error/404.html?code=404</location>
+    <location>/WEB-INF/views/error/404.html</location>
   </error-page>
 
   <!-- 内部服务器错误 -->
