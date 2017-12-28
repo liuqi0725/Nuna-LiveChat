@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.app.dao.mapper.UserMapper">
 	<select id="queryUserById" resultType="com.liuqi.nuna.livechat.pojo.TestUser">
-        select id,username,birthday,sex,address from user where id=#{id}
+		select id,username,birthday,sex,address from user where id=#{id}
 	</select>
 </mapper>
