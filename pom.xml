@@ -46,7 +46,14 @@
       <version>2.2.1-b03</version>
     </dependency>
 
-    <!--mybatis-->
+    <!-- DruidDataSource，本工程的dataSource配置使用的Druid -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.6</version>
+    </dependency>
+
+      <!--mybatis-->
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
@@ -63,7 +70,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>6.0.6</version>
+      <version>5.1.45</version>
     </dependency>
 
     <!--spring相关包-->
@@ -108,13 +115,6 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>
       <version>4.3.9.RELEASE</version>
-    </dependency>
-
-    <!-- DruidDataSource，本工程的dataSource配置使用的Druid -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>druid</artifactId>
-      <version>1.1.6</version>
     </dependency>
 
     <!--apache 通用包-->
