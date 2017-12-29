@@ -31,4 +31,4 @@ CREATE TABLE `nuna_chat_usersite` (
 
 insert into nuna_chat_user(username,password,email,created_at) values('liuqi','E10ADC3949BA59ABBE56E057F20F883E','liuqi_0725@aliyun.com',NOW());
 
-insert into nuna_chat_usersite(uid,site_domin,sitekey,created_at) values(1,'localhost','dsafksldfsf',NOW());
+insert into nuna_chat_usersite(uid,site_domin,sitekey,created_at) values(1,'localhost','RD6iATfL7ymIMedCsUhJDeAJzZguWL38CyvTFEA8yhlAKTyRJAFBpPb5OyXDwaei',NOW());
