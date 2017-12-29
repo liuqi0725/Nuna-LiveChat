@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuqi.nuna.livechat.dao.mapper.UserSiteMapper">
+
+
+	<!-- 根据 uid 查询用户下的站点集合 -->
+	<select id="queryUserSiteWithUid" resultType="com.liuqi.nuna.livechat.pojo.UserSite">
+		select id,uid,site_domain,site_key,status,stop_at,created_at,updated_at from nuna_chat_usersite where uid = #{uid}
+	</select>
+
+	<select id="queryUserSiteWithOne" resultType="com.liuqi.nuna.livechat.pojo.UserSite"
+			parameterType="com.liuqi.nuna.livechat.pojo.UserSite">
+		select id,uid,site_domain,site_key,status,stop_at,created_at,updated_at from nuna_chat_usersite where id=#{id} and uid = #{uid}
+	</select>
+
+</mapper>

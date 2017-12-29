@@ -146,7 +146,7 @@
   <!-- 项目初始化，一般加载系统变量，初始化赋值，逻辑处理等 -->
   <servlet>
     <servlet-name>AppInit</servlet-name>
-    <servlet-class>com.demo.app.others.sys.AppInit</servlet-class>
+    <servlet-class>com.liuqi.nuna.livechat.other.sys.AppInit</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
 
