@@ -51,7 +51,7 @@ public class ChatAuthServiceImpl implements ChatAuthService{
             return false;
 
         //如果 domain、sitekey 均匹配，正确
-        if(dbSiteInfo.getSite_domain().equalsIgnoreCase(userPostSiteInfo.getString("site_domain"))
+        if(dbSiteInfo.getSite_domain().equalsIgnoreCase(host)
                 && siteKey.equalsIgnoreCase(dbSiteInfo.getSite_key())){
 
             return true;

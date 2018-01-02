@@ -14,34 +14,8 @@
 <html lang="zh">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
-    <style type="text/css">
-        input#chat {
-            width: 410px
-        }
 
-        #console-container {
-            width: 400px;
-        }
-
-        #console {
-            border: 1px solid #CCCCCC;
-            border-right-color: #999999;
-            border-bottom-color: #999999;
-            height: 170px;
-            overflow-y: scroll;
-            padding: 5px;
-            width: 100%;
-        }
-
-        #console p {
-            padding: 0;
-            margin: 0;
-        }
-
-        .chat_div { width:400px; height:0;position:absolute; right:20px; bottom:0; margin:0;padding:0; overflow:hidden; display:none;}
-        #silu { font-size:12px; color:#666;position:absolute; right:0; text-align:right; text-decoration:underline;line-height:22px;}
-        .close { position:absolute; right:4px;top:-1px; color:#FFF; cursor:pointer}
-    </style>
+    <link rel="stylesheet" href="${basePath}/statics/css/nunachat.css">
     <link rel="stylesheet" href="${basePath}/statics/vendor/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="${basePath}/statics/vendor/bootstrapValidator/css/bootstrapValidator.css">
     <script type="application/javascript">
@@ -125,7 +99,7 @@
 
 
         function tips_pop(){
-            var MsgPop=document.getElementById("winpop");
+            var MsgPop=document.getElementById("nuna-chat");
 
             //var popH=parseInt(MsgPop.style.height);//将对象的高度转化为数字
             //如果是隐藏的
@@ -140,7 +114,7 @@
             }
         }
         function changeH(str) {
-            var MsgPop=document.getElementById("winpop");
+            var MsgPop=document.getElementById("nuna-chat");
             var popH = MsgPop.style.height === "" ? 0 : parseInt(MsgPop.style.height);
             if(str=="up"){
                 if(popH<=400){
@@ -199,42 +173,43 @@
         <button onclick="tips_pop()">开始聊天</button>
     </div>
 
-    <div class="panel panel-primary chat_div" id="winpop" hide="true">
+    <div class="panel panel-primary chat_div" id="nuna-chat" hide="true">
         <div class="panel-heading">
-            开始聊天
+            <span id="chat-head">开始聊天</span>
         </div>
 
         <div class="panel-body">
 
             <!-- agent -->
-            <div class="media" style="float: right;">
+            <div class="media fr">
 
-                <div class="media-body" style="border-radius: 5px;padding: 5px; background-color:darkcyan;">
+                <div class="media-body nuna-chat-msg agent-msg">
                     <%--<h4 class="media-heading">Media heading</h4>--%>
-                    <span style="color: white;">您好，请问您需要什么帮助？</span>
+                    <span>您好，请问您需要什么帮助？</span>
                 </div>
 
                 <div class="media-right">
                     <a href="#">
-                        <img class="media-object img-circle" width="30" style="border: 1px solid grey" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514537310692&di=192146df47bc3cd4a3b6355ae11ed777&imgtype=0&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2015-02-02%2F153209128.jpg" alt="...">
+                        <img class="media-object img-circle user-head-img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514537310692&di=192146df47bc3cd4a3b6355ae11ed777&imgtype=0&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2015-02-02%2F153209128.jpg" alt="...">
                     </a>
                 </div>
             </div>
 
             <!-- user -->
-            <div class="media" style="float: left;">
+            <div class="media fl">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-circle" width="30" style="border: 1px solid grey" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514537310692&di=192146df47bc3cd4a3b6355ae11ed777&imgtype=0&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2015-02-02%2F153209128.jpg" alt="...">
+                        <img class="media-object img-circle user-head-img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514537310692&di=192146df47bc3cd4a3b6355ae11ed777&imgtype=0&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2015-02-02%2F153209128.jpg" alt="...">
                     </a>
                 </div>
-                <div class="media-body" style="border-radius: 5px;padding: 5px; background-color:#00be29;">
+                <div class="media-body nuna-chat-msg user-msg">
                     <%--<h4 class="media-heading">Media heading</h4>--%>
-                    <span style="color: white;">您好，请问您需要什么帮助？</span>
+                    <span>您好，请问您需要什么帮助？</span>
                 </div>
             </div>
         </div>
-        <div class="panel-footer" style="position:absolute;bottom:0;width: 400px;">
+
+        <div class="panel-footer chatWinFooter">
 
             <div class="container-fluid">
                 <form class="form-inline">
@@ -256,6 +231,5 @@
 <script type="text/javascript" src="${basePath}/statics/vendor/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="${basePath}/statics/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${basePath}/statics/vendor/bootstrapValidator/js/bootstrapValidator.js"></script>
-<script type="text/javascript" src="${basePath}/statics/js/nunalivechat.js"></script>
 
 </html>
