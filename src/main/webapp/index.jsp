@@ -98,42 +98,6 @@
         }, false);
 
 
-        function tips_pop(){
-            var MsgPop=document.getElementById("nuna-chat");
-
-            //var popH=parseInt(MsgPop.style.height);//将对象的高度转化为数字
-            //如果是隐藏的
-            if (MsgPop.attributes.getNamedItem("hide").value == 'true'){
-                MsgPop.style.display="block";//显示隐藏的窗口
-                MsgPop.attributes.getNamedItem("hide").value = "false";
-                show=setInterval("changeH('up')",2);
-            }
-            else {
-                MsgPop.attributes.getNamedItem("hide").value = "true";
-                hide=setInterval("changeH('down')",2);
-            }
-        }
-        function changeH(str) {
-            var MsgPop=document.getElementById("nuna-chat");
-            var popH = MsgPop.style.height === "" ? 0 : parseInt(MsgPop.style.height);
-            if(str=="up"){
-                if(popH<=400){
-                    MsgPop.style.height=(popH+4).toString()+"px";
-                }
-                else{
-                    clearInterval(show);
-                }
-            }
-            if(str=="down"){
-                if(popH>=4){
-                    MsgPop.style.height=(popH-4).toString()+"px";
-                }
-                else{
-                    clearInterval(hide);
-                    MsgPop.style.display="none"; //隐藏DIV
-                }
-            }
-        }
 
         /**
          * 每60秒获取一次 chat 状态

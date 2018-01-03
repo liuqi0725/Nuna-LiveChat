@@ -358,3 +358,17 @@ body {
     padding: 0;
     color: #a94442;
 }
+
+.chat-console-nomarl {
+    font-size: 10px;
+    color: grey;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-console-error {
+    font-size: 10px;
+    color: red;
+    margin: 0;
+    padding: 0;
+}

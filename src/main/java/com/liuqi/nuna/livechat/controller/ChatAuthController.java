@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "nunachat")
+@RequestMapping(value = "/nunachat/auth")
 public class ChatAuthController extends BaseController{
 
     @Autowired
     ChatAuthService chatAuthService;
 
-    @RequestMapping(value = "/auth/domain",method = RequestMethod.GET)
+    @RequestMapping(value = "/domain",method = RequestMethod.GET)
     @ResponseBody
     public Object getUserJson(@RequestParam String host, @RequestParam String siteKey,
                               HttpServletRequest request, HttpServletResponse response) {

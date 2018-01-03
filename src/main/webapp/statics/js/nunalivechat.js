@@ -35,9 +35,14 @@
 
     /**
      * chat 设置
-     * @type {{hasSendWelcome: boolean, pageModel: string, pageMainDoc: null, user_head_url: string, agent_head_url: string, showInter: null, hideInter: null}}
+     * @type {{hasOnLine: boolean, hasSendWelcome: boolean, pageModel: string, pageMainDoc: null, user_head_url: string, agent_head_url: string, showInter: null, hideInter: null}}
      */
     NUNA_CHAT.Setting = {
+
+        /**
+         * 是否在线
+         */
+        hasOnLine : false,
 
         /**
          * 是否发起 welcome 信息
@@ -88,9 +93,8 @@
          * @email liuqi_0725@aliyun.com
          * @date 2017/12/29 下午9:13
          */
-        var url = "http://"+NUNA_CHAT.Connstants.HOST+"/nunachat/auth/domain?callback=?";
-        var data = {"host":document.domain, "siteKey":sitekey};
-
+        // var url = "http://"+NUNA_CHAT.Connstants.HOST+"/auth/domain?callback=?";
+        // var data = {"host":document.domain, "siteKey":sitekey};
         // $.getJSON(url, data,function(result) {
         //     // console.log(result);
         //     if(result.success){
@@ -517,17 +521,28 @@
                     //发送欢迎
                     NUNA_CHAT.Message.sendWelcomeMsg();
                     NUNA_CHAT.Message.userInputOnFoce();
+
+                    //建立 ws 连接
+                    if(!NUNA_CHAT.Setting.hasOnLine){
+                        NUNA_CHAT.WS.initialize();
+                        NUNA_CHAT.Setting.hasOnLine = true;
+                    }
                 }
 
             },
 
+            /**
+             * 发送信息
+             * @param msg
+             */
             sendMessage : function(msg){
 
                 //添加到窗口
                 NUNA_CHAT.Message.addUserMsg(msg);
                 //发送到服务端
 
-                NUNA_CHAT.Message.addAgentMsg("请稍后。。。。");
+                NUNA_CHAT.WS.sendMessage(msg);
+
             }
 
 
@@ -735,6 +750,10 @@
     };
 
 
+    /**
+     * 消息对象
+     * @type {{sendWelcomeMsg, clearUserInput, userInputOnFoce, addUserMsg, addAgentMsg, addConsole}}
+     */
     NUNA_CHAT.Message = (function(){
 
         return {
@@ -835,10 +854,124 @@
                 var firstChild = document.getElementById("chat-panel-body").firstChild;
 
                 document.getElementById("chat-panel-body").insertBefore(msg_div,firstChild);
+            },
+
+            /**
+             * 添加 console 信息
+             * @param msg
+             * @param error
+             */
+            addConsole : function(msg,error){
+
+                var console_center = document.getElementById("chat-console-id") || document.createElement("center");
+
+                console_center.className = error ? "chat-console-error" : "chat-console-nomarl";
+                console_center.id = "chat-console-id";
+                console_center.innerHTML = msg;
+
+                if(!document.getElementById("chat-console-id")){
+                    var firstChild = document.getElementById("chat-panel-body").firstChild;
+                    document.getElementById("chat-panel-body").insertBefore(console_center,firstChild);
+                }
+
             }
 
         };
     }());
+
+    /**
+     * 与服务器通信对象
+     * @type {{socket: null, connect: Function, initialize: initialize, sendMessage: Function}}
+     */
+    NUNA_CHAT.WS = {
+
+        socket : null,
+
+        msgQueue : [],
+
+        online : false,
+
+        connect : (function(host) {
+
+            if ('WebSocket' in window) {
+                this.socket = new WebSocket(host);
+            } else if ('MozWebSocket' in window) {
+                this.socket = new MozWebSocket(host);
+            } else {
+                NUNA_CHAT.Message.addConsole('错误: 此浏览器不支持 WebSocket 服务.',true);
+                return;
+            }
+
+            this.socket.onopen = function (evt) {
+                NUNA_CHAT.Message.addConsole('正在连接，请稍后',false);
+
+                // document.getElementById('chat').onkeydown = function(event) {
+                //     if (event.keyCode === 13) {
+                //         Chat.sendMessage();
+                //     }
+                // };
+
+                console.log(evt);
+            };
+
+            this.socket.onclose = function (evt) {
+                //document.getElementById('chat').onkeydown = null;
+                NUNA_CHAT.Message.addConsole('聊天已关闭。再见。',false);
+
+            };
+
+            this.socket.onmessage = function (evt) {
+
+
+
+                NUNA_CHAT.Message.addAgentMsg(evt.data);
+
+            };
+
+            this.socket.onerror = function(evt){
+                NUNA_CHAT.Message.addConsole(evt.data)
+            };
+        }),
+
+        initialize : function() {
+            if (window.location.protocol === 'http:') {
+                this.connect('ws://' + NUNA_CHAT.Connstants.HOST + '/nunachat/connect/'+NUNA_CHAT.User.username + "/"+NUNA_CHAT.User.phone);
+            } else {
+                this.connect('wss://' + NUNA_CHAT.Connstants.HOST + '/nunachat/connect'+NUNA_CHAT.User.username + "/"+NUNA_CHAT.User.phone);
+            }
+        },
+
+        sendMessage : (function(message) {
+
+            //建立 ws 连接
+            if(!this.online){
+                this.initialize();
+                this.online = true;
+                this.msgQueue.push(message);
+            }else{
+                if (message !== '') {
+                    this.socket.send(message);
+                }
+            }
+        }),
+
+        // var Console = {};
+        //
+        // Console.log = (function(message) {
+        //     var console = document.getElementById('console');
+        //     var p = document.createElement('p');
+        //     p.style.wordWrap = 'break-word';
+        //     p.innerHTML = message;
+        //     console.appendChild(p);
+        //     while (console.childNodes.length > 25) {
+        //         console.removeChild(console.firstChild);
+        //     }
+        //     console.scrollTop = console.scrollHeight;
+        // });
+
+        // Chat.initialize();
+    };
+
 
     var ChatCookie = {};
 
