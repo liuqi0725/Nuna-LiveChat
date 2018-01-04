@@ -25,6 +25,5 @@ public class ChatSessionHandler {
     /**
      * 所有的会话
      */
-    private static Vector<ChatSession> onLineUser = new HashMap<String , ChatConnect>();
 
 }

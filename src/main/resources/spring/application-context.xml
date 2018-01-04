@@ -15,7 +15,7 @@
     <!-- 自动扫描SpringMVC包 ,将带有注解的类 纳入spring容器管理 -->
     <context:component-scan base-package="com.liuqi"/>
 
-    <!-- 加载SPRING 的上下文到JAVA后台 -->
+    <!-- 加载SPRING 的上下文到JAVA后台,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring bean对象 -->
     <bean class="com.liuqi.nuna.livechat.other.handler.SpringContextHandler"/>
 
     <!-- 配置使Spring采用CGLIB代理 -->

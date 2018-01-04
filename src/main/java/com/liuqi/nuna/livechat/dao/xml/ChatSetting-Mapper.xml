@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuqi.nuna.livechat.dao.mapper.ChatSettingMapper">
+
+	<select id="queryAll" resultType="com.liuqi.nuna.livechat.pojo.ChatSetting">
+		select id,key_name,key_value,key_default,key_desc,created_at,updated_at from nuna_chat_setting
+	</select>
+
+	<select id="queryById" resultType="com.liuqi.nuna.livechat.pojo.ChatSetting">
+		select id,key_name,key_value,key_default,key_desc,created_at,updated_at from nuna_chat_setting where id=#{id}
+	</select>
+
+	<select id="queryByKey" resultType="com.liuqi.nuna.livechat.pojo.ChatSetting">
+		select id,key_name,key_value,key_default,key_desc,created_at,updated_at from nuna_chat_setting where key_name=#{key_name}
+	</select>
+
+	<select id="queryByNomarlStatus" resultType="com.liuqi.nuna.livechat.pojo.ChatSetting">
+		select id,key_name,key_value,key_default,key_desc,created_at,updated_at from nuna_chat_setting where key_status=0
+	</select>
+
+	<select id="queryByStopStatus" resultType="com.liuqi.nuna.livechat.pojo.ChatSetting">
+		select id,key_name,key_value,key_default,key_desc,created_at,updated_at from nuna_chat_setting where key_status=1
+	</select>
+
+	<select id="queryByDeleteStatus" resultType="com.liuqi.nuna.livechat.pojo.ChatSetting">
+		select id,key_name,key_value,key_default,key_desc,created_at,updated_at from nuna_chat_setting where key_status=2
+	</select>
+
+</mapper>

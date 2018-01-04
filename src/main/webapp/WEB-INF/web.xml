@@ -99,6 +99,10 @@
     <servlet-name>default</servlet-name>
     <url-pattern>*.map</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.svg</url-pattern>
+  </servlet-mapping>
 
   <!--Spring框架给我们提供过滤器CharacterEncodingFilter
   这个过滤器就是针对于每次浏览器请求进行过滤的，然后再其之上添加了父类没有的功能即处理字符编码。

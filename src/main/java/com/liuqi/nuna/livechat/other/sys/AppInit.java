@@ -35,6 +35,8 @@ public class AppInit extends HttpServlet {
 
         //执行系统变量赋值、查询数据库、初始化业务逻辑等
 
+        AppEnvInit.Init();
+
 
         logger.info("初始化系统.完毕.");
 

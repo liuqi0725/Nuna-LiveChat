@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuqi.nuna.livechat.dao.mapper.ChatUserMapper">
+
+	<select id="queryRoleById" resultType="com.liuqi.nuna.livechat.pojo.ChatUserRole">
+		select `id`,`name`,`permissions`,`user_default`,`desc`,`created_at` from nuna_chat_user_role where id=#{id}
+	</select>
+
+	<select id="queryRoleDefault" resultType="com.liuqi.nuna.livechat.pojo.ChatUserRole">
+		select `id`,`name`,`permissions`,`user_default`,`desc`,`created_at` from nuna_chat_user_role where user_default=0
+	</select>
+</mapper>

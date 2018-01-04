@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuqi.nuna.livechat.dao.mapper.ChatUserMapper">
+
+	<select id="queryByEmail" resultType="com.liuqi.nuna.livechat.pojo.ChatUser">
+		select id,name,password,email,phone,confirmed,role_id,created_at,updated_at from nuna_chat_user where email=#{email}
+	</select>
+
+	<select id="queryByPhone" resultType="com.liuqi.nuna.livechat.pojo.ChatUser">
+		select id,name,password,email,phone,confirmed,role_id,created_at,updated_at from nuna_chat_user where phone=#{phone}
+	</select>
+
+	<select id="queryById" resultType="com.liuqi.nuna.livechat.pojo.ChatUser">
+		select id,name,password,email,phone,confirmed,role_id,created_at,updated_at from nuna_chat_user where id=#{id}
+	</select>
+
+	<select id="save" parameterType="com.liuqi.nuna.livechat.pojo.ChatUser" resultType="com.liuqi.nuna.livechat.pojo.ChatUser">
+		insert into nuna_chat_user(name,password,email,phone,role_id,created_at) values(#{name},#{password},#{email},#{phone},#{role_id},NOW())
+	</select>
+
+
+</mapper>

@@ -1,5 +1,7 @@
 package com.liuqi.nuna.livechat.other.tool;
 
+import java.security.MessageDigest;
+
 /**
  * 通用工具类
  */
@@ -45,6 +47,47 @@ public class CommonTools {
         }
 
         return false;
+    }
+
+    /**
+     * str 转 md5
+     * @param str 需要转换的字符串
+     * @param str2Upper 是否转大写
+     * @return 转化后的 md5字符串
+     */
+    public static String Str2MD5(String str, boolean str2Upper) {
+
+        MessageDigest md5;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            md5.update((str).getBytes("UTF-8"));
+            byte b[] = md5.digest();
+
+            int i;
+            StringBuffer buf = new StringBuffer("");
+
+            for(int offset=0; offset<b.length; offset++){
+                i = b[offset];
+                if(i<0){
+                    i+=256;
+                }
+                if(i<16){
+                    buf.append("0");
+                }
+                buf.append(Integer.toHexString(i));
+            }
+
+            if(str2Upper){
+                return buf.toString().toUpperCase();
+            }else{
+                return buf.toString();
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }
