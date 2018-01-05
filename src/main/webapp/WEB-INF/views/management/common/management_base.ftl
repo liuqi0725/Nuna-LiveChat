@@ -21,7 +21,10 @@
     <div class="layui-layout layui-layout-admin">
 	
 		<#include "/management/common/management_top.ftl">
-		<#include "/management/common/management_left.ftl">
+
+		<#if Session.user.confirmed == 0>
+			<#include "/management/common/management_left.ftl">
+		</#if>
 
 		<!-- content start -->
 	    <div class="layui-body" style="background-color: white;">    			
@@ -45,7 +48,7 @@
 	    <!-- footer start -->
 	    <div class="layui-footer footer footer-ext">
 	        <div class="layui-main">
-	            <p>© 2017 <a href="/">四川深数科技有限公司</a> All Right</p>
+	            <p>© 2017 <a href="http://www.35liuqi.com" target="_blank">Alexliu</a> All Right</p>
 	        </div>
 	    </div>
 	    <!-- footer end -->
@@ -54,7 +57,7 @@
 	    
 	    </@block>
 	    
-	    <#include "/common/user_menu.ftl">
+	    <#include "/management/common/user_menu.ftl">
 	
 	</div>
 </body>

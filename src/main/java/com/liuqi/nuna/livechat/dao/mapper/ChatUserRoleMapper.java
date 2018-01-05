@@ -21,6 +21,10 @@ public class ChatUserRoleMapper extends BaseDao {
         return this.getSqlSession().selectOne("queryRoleById",id);
     }
 
+    public ChatUserRole getRoleByName(@Param("name")String name) {
+        return this.getSqlSession().selectOne("queryRoleByName",name);
+    }
+
     public ChatUserRole getDefault(){
         return this.getSqlSession().selectOne("queryRoleDefault");
     }

@@ -18,5 +18,31 @@
 		insert into nuna_chat_user(name,password,email,phone,role_id,created_at) values(#{name},#{password},#{email},#{phone},#{role_id},NOW())
 	</select>
 
+	<update id="updateChatUser" parameterType="com.liuqi.nuna.livechat.pojo.ChatUser">
+		update nuna_chat_user
+		<set>
+			<if test="confirmed != null ">
+				confirmed = #{confirmed},
+			</if>
+			<if test="role_id != null">
+				role_id = #{role_id},
+			</if>
+			<if test="phone != null and phone != ''">
+                phone = #{phone},
+			</if>
+			<if test="email != null and email != ''">
+                email = #{email},
+			</if>
+			<if test="password != null and password != ''">
+                password = #{password},
+			</if>
+			<if test="name != null and name != ''">
+                name = #{name},
+			</if>
+		</set>
+
+		where id=#{id}
+
+	</update>
 
 </mapper>

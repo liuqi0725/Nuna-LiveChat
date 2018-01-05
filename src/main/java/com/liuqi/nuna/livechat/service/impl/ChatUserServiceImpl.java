@@ -6,7 +6,9 @@ import com.liuqi.nuna.livechat.other.sys.AppConnstants;
 import com.liuqi.nuna.livechat.other.tool.CommonTools;
 import com.liuqi.nuna.livechat.pojo.ChatUser;
 import com.liuqi.nuna.livechat.pojo.ChatUserRole;
+import com.liuqi.nuna.livechat.service.ChatMailService;
 import com.liuqi.nuna.livechat.service.ChatUserService;
+import com.liuqi.nuna.module.role.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,9 @@ public class ChatUserServiceImpl implements ChatUserService{
 
     @Autowired
     ChatUserRoleMapper chatUserRoleMapper;
+
+    @Autowired
+    ChatMailService mailService;
 
     public ChatUser login(String login_col , Object login_val , String password){
         ChatUser user = null;
@@ -67,10 +72,27 @@ public class ChatUserServiceImpl implements ChatUserService{
         if(flag > 0){
             user = chatUserMapper.getUserByEmail(email);
             //发送验证邮件
+            mailService.sendConfirmMail(user);
 
             return user;
         }
 
         return null;
+    }
+
+    public boolean registerConfirmed(String token , ChatUser user) {
+
+        if(CommonTools.check_user_token(token,"id",String.valueOf(user.getId()))){
+            //修改用户 confirmd
+            user.setConfirmed(0);
+            //注册确认，修改用户为管理员
+            ChatUserRole role = chatUserRoleMapper.getRoleByName(String.valueOf(Roles.CHAT_ADMIN_USER[0]));
+            user.setRole_id(role.getId());
+            chatUserMapper.updateChatUser(user);
+            return true;
+        }
+
+        return false;
+
     }
 }

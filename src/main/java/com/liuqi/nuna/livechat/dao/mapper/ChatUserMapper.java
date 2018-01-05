@@ -28,4 +28,8 @@ public class ChatUserMapper extends BaseDao{
     public Integer saveUser(ChatUser user){
         return this.getSqlSession().insert("save" , user);
     }
+
+    public void updateChatUser(ChatUser user) {
+        this.getSqlSession().update("updateChatUser" ,user);
+    }
 }

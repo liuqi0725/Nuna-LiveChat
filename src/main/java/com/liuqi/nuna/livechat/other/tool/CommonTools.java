@@ -1,6 +1,13 @@
 package com.liuqi.nuna.livechat.other.tool;
 
+import com.alibaba.fastjson.JSONObject;
+import com.liuqi.nuna.livechat.other.sys.SystemParams;
+import org.apache.commons.lang.StringUtils;
+
 import java.security.MessageDigest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 通用工具类
@@ -50,6 +57,74 @@ public class CommonTools {
     }
 
     /**
+     * 生成用户 token
+     * @param expiration
+     * @param key
+     * @param key_val
+     * @return
+     */
+    public static String generate_user_token(Integer expiration,String key, Object key_val){
+
+        JSONObject data = new JSONObject();
+        data.put("expiration",expiration);
+        data.put("createtime",System.currentTimeMillis());
+        data.put("key",key);
+        data.put("val",key_val);
+
+        String token_key = StringUtils.isEmpty(SystemParams.CHAT_USER_TOKEN_KEY) ? "73FFEBA38BA3EE44923CA05FD46DA516" : SystemParams.CHAT_USER_TOKEN_KEY;
+
+        DESTools des = new DESTools(token_key);
+        try {
+            return des.encrypt(data.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 解析用户 token
+     * @param token
+     * @param key
+     * @param key_val
+     * @return
+     */
+    public static boolean check_user_token(String token,String key, String key_val){
+
+        String token_key = StringUtils.isEmpty(SystemParams.CHAT_USER_TOKEN_KEY) ? "73FFEBA38BA3EE44923CA05FD46DA516" : SystemParams.CHAT_USER_TOKEN_KEY;
+
+        DESTools des = new DESTools(token_key);
+        try {
+            JSONObject data = JSONObject.parseObject(des.decrypt(token));
+            //判断时间
+            int expiration = data.getInteger("expiration");
+            long createtime = data.getLong("createtime");
+            long currenttime = System.currentTimeMillis();
+
+            long bet = (currenttime - createtime) / 1000;
+
+            //判断时限
+            if( bet > expiration){
+                return false;
+            }
+
+            //判断 key
+            if(!data.getString("key").equals(key))
+                return false;
+
+            //判断 value
+            if(!data.getString("val").equals(key_val))
+                return false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * str 转 md5
      * @param str 需要转换的字符串
      * @param str2Upper 是否转大写
@@ -87,6 +162,25 @@ public class CommonTools {
             e.printStackTrace();
             return null;
         }
+
+    }
+
+    public static void main(String[] args) {
+
+//        String s = "201801051612";
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
+//        Date start = null;
+//        try {
+//            start = sdf.parse(s);
+//            System.out.println(start);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println((System.currentTimeMillis() - start.getTime()) / 1000 +" s");
+
+        System.out.println(CommonTools.Str2MD5("I love nuna-livechat,alexliu",true));
 
     }
 

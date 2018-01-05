@@ -38,4 +38,12 @@ public class ChatManagementController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/unconfirmed",method = RequestMethod.GET)
+    @RequireLogin
+    public ModelAndView unconfirmed(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("management/unconfirmed");
+        return modelAndView;
+    }
+
 }

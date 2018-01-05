@@ -20,4 +20,43 @@
 
     <!-- 配置使Spring采用CGLIB代理 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean id="appConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:config/email/email.properties</value>
+                <value>classpath*:config/taskexecutor.properties</value>
+                <value>classpath*:database/mysql_jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- spring MailSender -->
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <!-- 如果是网易邮箱， mail.smtp.starttls.enable 设置为 false-->
+                <prop key="mail.smtp.starttls.enable">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--配置email线程池-->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 核心线程数 -->
+        <property name="corePoolSize" value="${executor.corePoolSize}" />
+        <!-- 最大线程数 -->
+        <property name="maxPoolSize" value="${executor.maxPoolSize}" />
+        <!-- 最大队列数 -->
+        <property name="queueCapacity" value="${executor.queueCapacity}" />
+        <!-- 线程池维护线程所允许的空闲时间 -->
+        <property name="keepAliveSeconds" value="${executor.keepAliveSeconds}" />
+    </bean>
 </beans>

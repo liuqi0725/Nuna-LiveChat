@@ -1,5 +1,6 @@
 package com.liuqi.nuna.livechat.other.sys;
 
+import com.alibaba.fastjson.JSONObject;
 import com.liuqi.nuna.livechat.other.handler.SpringContextHandler;
 import com.liuqi.nuna.livechat.pojo.ChatSetting;
 import com.liuqi.nuna.livechat.service.ChatSettingService;
@@ -61,6 +62,16 @@ public class AppEnvInit {
             if(setting.getKey_name().equals("CHAT_SESSIONG_CUSTOMER_TIME_OUT")){
                 SystemParams.CHAT_SESSIONG_CUSTOMER_TIME_OUT = Integer.parseInt(setting.getKey_value());
                 logger.info("Read DataBase Params [CHAT_SESSIONG_CUSTOMER_TIME_OUT]. >> [{}]",SystemParams.CHAT_SESSIONG_CUSTOMER_TIME_OUT);
+            }
+
+            if(setting.getKey_name().equals("CHAT_MAIL_SETTING")){
+                SystemParams.CHAT_MAIL_SETTING = JSONObject.parseObject(setting.getKey_value());
+                logger.info("Read DataBase Params [CHAT_MAIL_SETTING]. >> [{}]",SystemParams.CHAT_MAIL_SETTING.toString());
+            }
+
+            if(setting.getKey_name().equals("CHAT_USER_TOKEN_KEY")){
+                SystemParams.CHAT_USER_TOKEN_KEY = setting.getKey_value();
+                logger.info("Read DataBase Params [CHAT_USER_TOKEN_KEY]. >> [{}]",SystemParams.CHAT_USER_TOKEN_KEY);
             }
 
         }

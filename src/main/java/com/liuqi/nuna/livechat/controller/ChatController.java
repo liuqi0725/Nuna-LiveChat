@@ -8,12 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.util.Map;
 
 /**
@@ -55,7 +58,12 @@ public class ChatController {
             }else{
                 //保存 session
                 request.getSession().setAttribute("user",user);
-                modelAndView.setViewName("redirect:/management/index");
+
+                //已确认邮箱 跳转 index ,未确认跳转unconfirmed
+                if(user.getConfirmed() == 0)
+                    modelAndView.setViewName("redirect:/management/index");
+                else
+                    modelAndView.setViewName("redirect:/management/unconfirmed");
             }
         }
 
@@ -83,7 +91,8 @@ public class ChatController {
             if (user != null){
                 //保存 session
                 request.getSession().setAttribute("user", user);
-                modelAndView.setViewName("redirect:/management/index");
+                //跳转 unconfirmed
+                modelAndView.setViewName("redirect:/management/unconfirmed");
             }else{
                 throw new Exception("[NOT ERROR]Register user maybe registerd !");
             }
@@ -94,6 +103,42 @@ public class ChatController {
             modelAndView.addObject("message","注册失败或该邮箱已被注册!");
             modelAndView.addObject("register",true);
             modelAndView.setViewName("/login");
+        }
+
+        return modelAndView;
+    }
+
+    /**
+     * 注册邮箱确认
+     * @param token
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/confirmed",method=RequestMethod.GET)
+    @RequireLogin
+    public ModelAndView confirmed(@RequestParam String token, HttpServletRequest request, HttpServletResponse response) {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        try {
+
+            ChatUser user = (ChatUser) request.getSession().getAttribute("user");
+
+            if(chatUserService.registerConfirmed(token,user)){
+                //更新 session 中的 user 值
+                request.getSession().setAttribute("user", user);
+                modelAndView.setViewName("redirect:/management/index");
+            }else{
+                throw new Exception("[NOT ERROR]Register user confirmed faild !");
+            }
+
+        } catch (Exception e){
+            logger.error("Register user confirmed Function error ,e >> {}" , e.getMessage());
+            e.printStackTrace();
+
+            modelAndView.addObject("message","验证时间已过或信息不正确!");
+            modelAndView.setViewName("/management/unconfirmed");
         }
 
         return modelAndView;

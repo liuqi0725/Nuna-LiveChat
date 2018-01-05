@@ -6,6 +6,10 @@
 		select `id`,`name`,`permissions`,`user_default`,`desc`,`created_at` from nuna_chat_user_role where id=#{id}
 	</select>
 
+	<select id="queryRoleByName" resultType="com.liuqi.nuna.livechat.pojo.ChatUserRole">
+		select `id`,`name`,`permissions`,`user_default`,`desc`,`created_at` from nuna_chat_user_role where name=#{name}
+	</select>
+
 	<select id="queryRoleDefault" resultType="com.liuqi.nuna.livechat.pojo.ChatUserRole">
 		select `id`,`name`,`permissions`,`user_default`,`desc`,`created_at` from nuna_chat_user_role where user_default=0
 	</select>

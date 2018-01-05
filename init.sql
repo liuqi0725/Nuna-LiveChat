@@ -145,7 +145,7 @@ CREATE TABLE `nuna_chat_setting` (
 /** 角色 **/
 insert into nuna_chat_user_role(`name`,`permissions`,`user_default`,`desc`,`created_at`) values('CHAT_UNCONFIRMED_USER',0,0,'未认证邮箱用户',NOW());
 insert into nuna_chat_user_role(`name`,`permissions`,`user_default`,`desc`,`created_at`) values('CHAT_ADMIN_USER',255,1,'管理员',NOW());
-insert into nuna_chat_user_role(`name`,`permissions`,`user_default`,`desc`,`created_at`) values('CHAT_AGENT',119,1,'管理员',NOW());
+insert into nuna_chat_user_role(`name`,`permissions`,`user_default`,`desc`,`created_at`) values('CHAT_AGENT',119,1,'坐席人员',NOW());
 insert into nuna_chat_user_role(`name`,`permissions`,`user_default`,`desc`,`created_at`) values('CHAT_ASSIST_ADMIN_USER',63,1,'管理员助手',NOW());
 
 insert into nuna_chat_user(username,password,email,created_at) values('liuqi','E10ADC3949BA59ABBE56E057F20F883E','liuqi_0725@aliyun.com',NOW());
@@ -157,3 +157,10 @@ insert into nuna_chat_setting(`key_name`,`key_value`,`key_default`,`key_desc`,`c
 insert into nuna_chat_setting(`key_name`,`key_value`,`key_default`,`key_desc`,`created_at`) values('CHAT_MAX_QUEUE_NUMBER','20','20','最大排队人数',NOW());
 insert into nuna_chat_setting(`key_name`,`key_value`,`key_default`,`key_desc`,`created_at`) values('CHAT_SESSIONG_AGENT_TIME_OUT','300','300','会话中客服超时结束会话时间。0 不超时。单位-秒',NOW());
 insert into nuna_chat_setting(`key_name`,`key_value`,`key_default`,`key_desc`,`created_at`) values('CHAT_SESSIONG_CUSTOMER_TIME_OUT','300','300','会话中用户超时结束会话时间。0 不超时。单位-秒',NOW());
+
+/** 请修改邮箱信息 **/
+insert into nuna_chat_setting(`key_name`,`key_value`,`key_default`,`key_desc`,`created_at`) values('CHAT_MAIL_SETTING','{"subject_prefix":"[NUNA-LiveChat]","send_name":"Nuna-Admin","username":"example@mail.com"}','','邮件配置信息',NOW());
+
+insert into nuna_chat_setting(`key_name`,`key_value`,`key_default`,`key_desc`,`created_at`) values('CHAT_USER_TOKEN_KEY','73FFEBA38BA3EE44923CA05FD46DA516','','用户 token-key',NOW());
+
+

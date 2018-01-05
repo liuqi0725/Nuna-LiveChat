@@ -2,8 +2,6 @@ package com.liuqi.nuna.livechat.service;
 
 import com.liuqi.nuna.livechat.pojo.ChatUser;
 
-import java.util.Map;
-
 /**
  * @Author : alexliu
  * @Description : something do..
@@ -29,5 +27,13 @@ public interface ChatUserService {
      * @return
      */
     public ChatUser register(String name, String email, String phone, String password);
+
+    /**
+     * 注册邮件确认
+     * @param token
+     * @param user
+     * @return
+     */
+    public boolean registerConfirmed(String token,ChatUser user);
 
 }

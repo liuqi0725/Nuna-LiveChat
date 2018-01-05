@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 
 public class AppInit extends HttpServlet {
@@ -22,6 +23,25 @@ public class AppInit extends HttpServlet {
         logger.info("初始化系统.");
 
         ServletContext context = getServletContext();
+
+        String webPath = context.getRealPath("/");
+
+        if (!webPath.endsWith("\\") && !webPath.endsWith("/")) {
+            if (webPath.lastIndexOf("\\") >= 0) {
+                webPath = webPath + "\\";
+            } else {
+                webPath = webPath + "/";
+            }
+        }
+
+        SystemParams.APP_REAL_PATH = webPath;
+        logger.info("系统配置 ：APP_REAL_PATH = {}",SystemParams.APP_REAL_PATH);
+
+        SystemParams.APP_PROJECT_NAME = context.getContextPath();
+        logger.info("系统配置 ：APP_PROJECT_NAME = {}",SystemParams.APP_PROJECT_NAME);
+
+        SystemParams.APP_CONFIG_PATH = SystemParams.APP_REAL_PATH + "WEB-INF" + File.separator + "classes" + File.separator + "config" + File.separator;
+        logger.info("系统配置 ：APP_CONFIG_PATH = {}", SystemParams.APP_CONFIG_PATH);
 
         /*
          * 可以读取 web.xml 配置

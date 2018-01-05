@@ -1,6 +1,6 @@
 <!-- top nav start -->
 <div class="layui-header">
-    <div class="layui-logo">DAM - 数字档案管理</div>
+    <div class="layui-logo">NUNA-LiveChat</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
     	<#if Session.user?exists>
